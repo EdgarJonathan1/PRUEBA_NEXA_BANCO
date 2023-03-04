@@ -2,7 +2,6 @@ package bank.nexa.com.bankservice.transaction.service.account;
 
 import bank.nexa.com.bankservice.transaction.Respository.database.bank.AccountRepository;
 import bank.nexa.com.bankservice.transaction.model.database.bank.Account;
-import bank.nexa.com.bankservice.transaction.model.database.bank.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +27,7 @@ public class AccountBalanceController {
             ResponseAccountBalanceDto responseAccountBalanceDto = new ResponseAccountBalanceDto();
             responseAccountBalanceDto.setAccountNumber(account.getId());
             responseAccountBalanceDto.setNameClient(account.getIdclient().getCompleteName());
-            responseAccountBalanceDto.setTypeProduct(account.getIdproduct().getName());
+            responseAccountBalanceDto.setTypeProduct(account.getIdproduct().getIdtypeAccount().getName());
             responseAccountBalanceDto.setInterestRate(account.getIdproduct().getInterestRate());
             responseAccountBalanceDto.setBalance(account.getBalance());
             responseAccountBalanceDto.setStatus(account.getIdstatus().getName());
