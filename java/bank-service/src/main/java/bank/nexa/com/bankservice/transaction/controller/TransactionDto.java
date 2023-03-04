@@ -1,17 +1,17 @@
 package bank.nexa.com.bankservice.transaction.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import java.util.Date;
 
 @Data
 public class TransactionDto {
 
-    private Long numberAccount;
-    private Date dateTransaction;
-    private Long amount;
+    @JsonProperty("numero_cuenta")
+    private Integer numberAccount;
+    @JsonProperty("monto")
+    private Integer amount;
+    @JsonProperty("operacion")
     private CodeOperation codeOperation;
     
 }
-
-enum CodeOperation { DEBIT, CREDIT }
 

@@ -1,11 +1,13 @@
 package bank.nexa.com.bankservice.transaction.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.Instant;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "client")
 public class Client {
@@ -33,92 +35,9 @@ public class Client {
     private String dpi;
 
     @Column(name = "birthday")
-    private Instant birthday;
+    private LocalDateTime birthday;
 
-    @Column(name = "gender")
-    private Byte gender;
-
-    @OneToMany(mappedBy = "clientIdclient")
-    private Set<Account> accounts = new LinkedHashSet<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getCountryBirthday() {
-        return countryBirthday;
-    }
-
-    public void setCountryBirthday(String countryBirthday) {
-        this.countryBirthday = countryBirthday;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getSecondLastName() {
-        return secondLastName;
-    }
-
-    public void setSecondLastName(String secondLastName) {
-        this.secondLastName = secondLastName;
-    }
-
-    public String getDpi() {
-        return dpi;
-    }
-
-    public void setDpi(String dpi) {
-        this.dpi = dpi;
-    }
-
-    public Instant getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Instant birthday) {
-        this.birthday = birthday;
-    }
-
-    public Byte getGender() {
-        return gender;
-    }
-
-    public void setGender(Byte gender) {
-        this.gender = gender;
-    }
-
-    public Set<Account> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(Set<Account> accounts) {
-        this.accounts = accounts;
-    }
+    @Column(name = "gender", length = 45)
+    private String gender;
 
 }

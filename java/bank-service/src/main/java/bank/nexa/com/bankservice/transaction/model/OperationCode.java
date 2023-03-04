@@ -1,10 +1,11 @@
 package bank.nexa.com.bankservice.transaction.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
+@Getter
+@Setter
 @Entity
 @Table(name = "operation_code")
 public class OperationCode {
@@ -19,39 +20,5 @@ public class OperationCode {
     @Column(name = "description", length = 45)
     private String description;
 
-    @OneToMany(mappedBy = "operationCodeIdoperationCode")
-    private Set<Transaction> transactions = new LinkedHashSet<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Set<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
-    }
 
 }

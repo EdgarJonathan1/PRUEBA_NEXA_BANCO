@@ -1,138 +1,109 @@
--- MySQL Workbench Forward Engineering
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
+DROP SCHEMA IF EXISTS bank_database;
+DROP TABLE IF EXISTS bank_database.client;
+DROP TABLE IF EXISTS bank_database.status;
+DROP TABLE IF EXISTS bank_database.type_product;
+DROP TABLE IF EXISTS bank_database.product;
+DROP TABLE IF EXISTS bank_database.account;
+DROP TABLE IF EXISTS bank_database.operation_code;
+DROP TABLE IF EXISTS bank_database.transaction;
 
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
-
--- -----------------------------------------------------
--- Table `mydb`.`client`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`client` (
-  `idclient` INT NOT NULL,
-  `first_name` VARCHAR(45) NULL,
-  `country_birthday` VARCHAR(45) NULL,
-  `middle_name` VARCHAR(45) NULL,
-  `last_name` VARCHAR(45) NULL,
-  `second_last_name` VARCHAR(45) NULL,
-  `dpi` VARCHAR(45) NULL,
-  `birthday` TIMESTAMP NULL,
-  `gender` TINYINT NULL,
-  PRIMARY KEY (`idclient`))
-ENGINE = InnoDB;
+CREATE SCHEMA IF NOT EXISTS bank_database DEFAULT CHARACTER SET utf8 ;
+USE bank_database ;
 
 
--- -----------------------------------------------------
--- Table `mydb`.`status`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`status` (
-  `idstatus` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS bank_database.client (
+  idclient INT NOT NULL AUTO_INCREMENT,
+  first_name VARCHAR(45) NULL,
+  country_birthday VARCHAR(45) NULL,
+  middle_name VARCHAR(45) NULL,
+  last_name VARCHAR(45) NULL,
+  second_last_name VARCHAR(45) NULL,
+  dpi VARCHAR(45) NULL,
+  birthday TIMESTAMP NULL,
+  gender VARCHAR(45) NULL,
+  PRIMARY KEY (idclient)
+);
+
+CREATE TABLE IF NOT EXISTS bank_database.`status` (
+  idstatus INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
-  PRIMARY KEY (`idstatus`))
-ENGINE = InnoDB;
+  PRIMARY KEY (idstatus)
+);
 
-
--- -----------------------------------------------------
--- Table `mydb`.`type_product`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`type_product` (
-  `idtype_account` INT NOT NULL,
-  `name` ENUM('AHORRO', 'MONETARIO') NULL,
-  PRIMARY KEY (`idtype_account`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`product`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`product` (
-  `idproduct` INT NOT NULL,
-  `type_account_idtype_account` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS bank_database.type_product (
+  idtype_account INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
-  `interest_calculation` DECIMAL(15,0) NULL,
-  `interest_rate` DECIMAL(15,0) NULL,
-  PRIMARY KEY (`idproduct`),
-  INDEX `fk_product_type_account1_idx` (`type_account_idtype_account` ASC) VISIBLE,
-  CONSTRAINT `fk_product_type_account1`
-    FOREIGN KEY (`type_account_idtype_account`)
-    REFERENCES `mydb`.`type_product` (`idtype_account`)
+  PRIMARY KEY (idtype_account)
+);
+
+CREATE TABLE IF NOT EXISTS bank_database.product (
+  idproduct INT NOT NULL AUTO_INCREMENT,
+  idtype_account INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  interest_calculation DECIMAL(15,0) NULL,
+  interest_rate DECIMAL(15,0) NULL,
+  PRIMARY KEY (idproduct),
+  INDEX fk_product_type_account_idx (idtype_account ASC) VISIBLE,
+  CONSTRAINT fk_product_type_account
+    FOREIGN KEY (idtype_account)
+    REFERENCES bank_database.type_product (idtype_account)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION
+);
 
-
--- -----------------------------------------------------
--- Table `mydb`.`account`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`account` (
-  `idaccount` INT NOT NULL,
-  `status_idstatus` INT NOT NULL,
-  `product_idproduct` INT NOT NULL,
-  `client_idclient` INT NOT NULL,
-  `balance` DECIMAL(15,2) NULL,
-  PRIMARY KEY (`idaccount`),
-  INDEX `fk_account_status1_idx` (`status_idstatus` ASC) VISIBLE,
-  INDEX `fk_account_product1_idx` (`product_idproduct` ASC) VISIBLE,
-  INDEX `fk_account_client1_idx` (`client_idclient` ASC) VISIBLE,
-  CONSTRAINT `fk_account_status1`
-    FOREIGN KEY (`status_idstatus`)
-    REFERENCES `mydb`.`status` (`idstatus`)
+CREATE TABLE IF NOT EXISTS bank_database.account (
+  idaccount INT NOT NULL AUTO_INCREMENT,
+  idstatus INT NOT NULL,
+  idproduct INT NOT NULL,
+  idclient INT NOT NULL,
+  balance DECIMAL(15,2) NULL,
+  PRIMARY KEY (idaccount),
+  INDEX fk_account_status_idx (idstatus ASC) VISIBLE,
+  INDEX fk_account_product_idx (idproduct ASC) VISIBLE,
+  INDEX fk_account_client_idx (idclient ASC) VISIBLE,
+  CONSTRAINT fk_account_status
+    FOREIGN KEY (idstatus)
+    REFERENCES bank_database.status (idstatus)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_account_product1`
-    FOREIGN KEY (`product_idproduct`)
-    REFERENCES `mydb`.`product` (`idproduct`)
+  CONSTRAINT fk_account_product
+    FOREIGN KEY (idproduct)
+    REFERENCES bank_database.product (idproduct)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_account_client1`
-    FOREIGN KEY (`client_idclient`)
-    REFERENCES `mydb`.`client` (`idclient`)
+  CONSTRAINT fk_account_client
+    FOREIGN KEY (idclient)
+    REFERENCES bank_database.client (idclient)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION
+);
 
-
--- -----------------------------------------------------
--- Table `mydb`.`operation_code`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`operation_code` (
-  `idoperation_code` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS bank_database.operation_code (
+  idoperation_code INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   `description` VARCHAR(45) NULL,
-  PRIMARY KEY (`idoperation_code`))
-ENGINE = InnoDB;
+  PRIMARY KEY (idoperation_code)
+);
 
-
--- -----------------------------------------------------
--- Table `mydb`.`transaction`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`transaction` (
-  `idtransaction` INT NOT NULL,
-  `operation_code_idoperation_code` INT NOT NULL,
-  `account_idaccount` INT NOT NULL,
-  `account_product_idproduct` INT NOT NULL,
-  `amount` DECIMAL(15,2) NULL,
-  `transaction_date` DATETIME NULL,
-  PRIMARY KEY (`idtransaction`),
-  INDEX `fk_transaction_operation_code1_idx` (`operation_code_idoperation_code` ASC) VISIBLE,
-  INDEX `fk_transaction_account1_idx` (`account_idaccount` ASC, `account_product_idproduct` ASC) VISIBLE,
-  CONSTRAINT `fk_transaction_operation_code1`
-    FOREIGN KEY (`operation_code_idoperation_code`)
-    REFERENCES `mydb`.`operation_code` (`idoperation_code`)
+CREATE TABLE IF NOT EXISTS bank_database.transaction (
+  idtransaction INT NOT NULL AUTO_INCREMENT,
+  idoperation_code INT NOT NULL,
+  idaccount INT NOT NULL,
+  amount DECIMAL(15,2) NULL,
+  transaction_date DATETIME NULL,
+	description VARCHAR(255) NULL,
+  PRIMARY KEY (idtransaction),
+  INDEX fk_transaction_operation_code_idx (idoperation_code ASC) VISIBLE,
+  INDEX fk_transaction_account_idx (idaccount ASC) VISIBLE,
+  CONSTRAINT fk_transaction_operation_code
+    FOREIGN KEY (idoperation_code)
+    REFERENCES bank_database.operation_code (idoperation_code)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_transaction_account1`
-    FOREIGN KEY (`account_idaccount`)
-    REFERENCES `mydb`.`account` (`idaccount`)
+  CONSTRAINT fk_transaction_account
+    FOREIGN KEY (idaccount)
+    REFERENCES bank_database.account (idaccount)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION
+);
 
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
