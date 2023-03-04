@@ -1,4 +1,4 @@
-package bank.nexa.com.bankservice.transaction.model;
+package bank.nexa.com.bankservice.transaction.model.database.bank;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -39,5 +39,9 @@ public class Client {
 
     @Column(name = "gender", length = 45)
     private String gender;
+
+    public String getCompleteName() {
+        return firstName + " " + middleName + " " + lastName + " " + secondLastName;
+    }
 
 }

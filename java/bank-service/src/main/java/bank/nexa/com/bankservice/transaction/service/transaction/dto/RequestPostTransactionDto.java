@@ -1,10 +1,10 @@
-package bank.nexa.com.bankservice.transaction.controller;
+package bank.nexa.com.bankservice.transaction.service.transaction.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class TransactionDto {
+public class RequestPostTransactionDto {
 
     @JsonProperty("numero_cuenta")
     private Integer numberAccount;

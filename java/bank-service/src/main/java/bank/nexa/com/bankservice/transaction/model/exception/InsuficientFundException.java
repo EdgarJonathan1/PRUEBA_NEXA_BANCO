@@ -12,7 +12,7 @@ public class InsuficientFundException extends RuntimeException{
     }
 
     public static InsuficientFundException of(Integer numberAccount){
-        return new InsuficientFundException("The account number: " + numberAccount + " has insuficient fund");
+        return new InsuficientFundException("El numero de cuenta: " + numberAccount + " tiene fondos insuficientes");
     }
 
 }

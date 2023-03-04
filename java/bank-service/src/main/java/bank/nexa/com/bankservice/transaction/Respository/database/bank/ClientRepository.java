@@ -1,6 +1,6 @@
-package bank.nexa.com.bankservice.transaction.Respository;
+package bank.nexa.com.bankservice.transaction.Respository.database.bank;
 
-import bank.nexa.com.bankservice.transaction.model.Client;
+import bank.nexa.com.bankservice.transaction.model.database.bank.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

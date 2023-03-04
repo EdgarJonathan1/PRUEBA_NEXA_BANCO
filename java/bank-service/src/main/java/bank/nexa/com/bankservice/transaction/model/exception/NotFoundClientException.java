@@ -11,7 +11,7 @@ public class NotFoundClientException extends  RuntimeException{
     }
 
     public static NotFoundClientException of(Integer numberAccount){
-        return new NotFoundClientException("The account number: " + numberAccount + " not found");
+        return new NotFoundClientException("El numero de cuenta: " + numberAccount + " no existe");
     }
 
 }

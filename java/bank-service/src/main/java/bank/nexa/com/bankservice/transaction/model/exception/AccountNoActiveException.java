@@ -11,7 +11,7 @@ public class AccountNoActiveException extends RuntimeException{
     }
 
     public static AccountNoActiveException of(Integer numberAccount){
-        return new AccountNoActiveException("The account number: " + numberAccount + " is not active");
+        return new AccountNoActiveException("El numero de cuenta: " + numberAccount + " no esta activa");
     }
     
 }

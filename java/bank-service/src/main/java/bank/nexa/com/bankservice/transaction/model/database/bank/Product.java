@@ -1,4 +1,4 @@
-package bank.nexa.com.bankservice.transaction.model;
+package bank.nexa.com.bankservice.transaction.model.database.bank;
 
 import jakarta.persistence.*;
 import lombok.Getter;

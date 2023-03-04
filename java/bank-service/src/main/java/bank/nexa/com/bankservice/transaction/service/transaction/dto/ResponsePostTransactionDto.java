@@ -1,4 +1,4 @@
-package bank.nexa.com.bankservice.transaction.controller;
+package bank.nexa.com.bankservice.transaction.service.transaction.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class ResponseDto {
+public class ResponsePostTransactionDto {
    @JsonProperty("codigo_respuesta")
    private String answerCode;
    @JsonProperty("descripcion_respuesta")
